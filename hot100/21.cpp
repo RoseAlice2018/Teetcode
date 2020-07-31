@@ -11,39 +11,59 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
     {
-        ListNode* res=new ListNode(0);
-        ListNode* p=res;
-        while (l1!=NULL&&l2!=NULL)
+        ListNode* left=l1;
+        ListNode* right=l2;
+        ListNode* head=new ListNode(0);
+        ListNode* p=head;
+        while (left!=NULL&&right!=NULL)
         {
-           
-            if(l1->val>l2->val)
+            if(left->val>right->val)
             {
-                p->next=l2;
+                // p->val=right->val;
+                // ListNode* q=new ListNode(0);                
+                // right=right->next;
+                p->next=right;
                 p=p->next;
-                l2=l2->next;
+                right=right->next;
             }
-            else 
+            else if(left->val<right->val)
             {
-                p->next=l1;
+                // p->val=left->val;
+                p->next=left;
                 p=p->next;
-                l1=l1->next;
+                left=left->next;
+            }
+            else
+            {
+                p->next=right;
+                p=p->next;
+                p->next=left;
+                left=left->next;
+                right=right->next;
+                p=p->next;
+                // p->val=left->val;
+                // ListNode* q=new ListNode(0);
+                // left=left->next;
+                // right=right->next;
+                // p->next=q;
+                // q->val=p->val;
+                // p=q;
             }
         }
-        while(l1!=NULL)
+        while (left!=NULL)
         {
-            p->next=l1;
+            p->next=left;
             p=p->next;
-            l1=l1->next;
+            left=left->next;
         }
-          while(l2!=NULL)
+        while (right!=NULL)
         {
-            p->next=l2;
+            p->next=right;
+            right=right->next;
             p=p->next;
-            l2=l2->next;
         }
-
         
-        return res->next;
         
+        return head->next;
     }
 };
